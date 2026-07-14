@@ -39,7 +39,7 @@ def  leer_opcion():
         print("debes seleccionar una opcion valida")
 
 def unidades_categoria(categoria, prendas,bodega):
-    print(f"la disponibilidad de {categoria}es:")
+    print(f"la disponibilidad de {categoria} es:")
     acumulador = 0
     for codigo, datos in prendas.items():
         if datos[1].lower() == categoria.lower():
@@ -116,7 +116,7 @@ def eliminar_prenda(codigo, prendas, bodega):
         return True
     return False
 
-
+#----------------------------------
 
 
 while True:
