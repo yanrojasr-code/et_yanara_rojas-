@@ -67,11 +67,11 @@ def actualizar_precio(codigo, nuevo_precio, bodega):
         bodega[codigo][0] = nuevo_precio
         return True
     return False
-def validar_código(codigo):
-    return codigo.strip() != "" and not buscar_codigo
+def validar_codigo(codigo):
+    return codigo.strip() != "" and not buscar_codigo(codigo)
 def validar_nombre(nombre):
     return nombre.strip() != ""
-def validar_categoría(categoria):
+def validar_categoria(categoria):
     return categoria.strip() != ""
 def validar_talla(talla):
     return talla.strip() != ""
@@ -101,9 +101,20 @@ def validar_unidades (unidades):
         return False
 
 def agregar_prenda(codigo, nombre, categoria, talla, color, material, es_unisex, precio, unidades,prendas, bodega):
-     print
+    if buscar_codigo(codigo):
+        return False
+    else:
+        prendas[codigo] = [nombre, categoria, talla, color, material, es_unisex]
+        bodega[codigo] = [precio, unidades]
+        return True
 
-
+def eliminar_prenda(codigo, prendas, bodega):
+    codigo=codigo.upper()
+    if buscar_codigo(codigo):
+        del prendas[codigo]
+        del bodega [codigo]
+        return True
+    return False
 
 
 
@@ -141,4 +152,54 @@ while True:
                 if respuesta.lower() == "n":
                     break
             except ValueError:
-                print("Debe ingresar valores enteros")
+                print("Debe ingresar valores enteros") 
+    elif opcion == 4:
+        codigo= input("ingrese el codigo de la prenda:")
+        if not validar_codigo(codigo):
+            print("codigo invalido")
+            continue
+        nombre = input("ingrese el nombre: ")
+        if not validar_nombre(nombre):
+            print("prenda invalida") 
+            continue
+        categoria=input("ingrese la categoria: ")
+        if not validar_categoria(categoria):
+            print("categoria invalida")
+            continue
+        talla=input("ingrese la talla: ")
+        if not validar_talla(talla):
+            print("talla invalida")
+            continue
+        color = input("ingrese el color: ")
+        if not validar_color(color):
+            print("color invalido")
+            continue
+        material= input("ingrese el material de la prenda: ")
+        if not validar_material(material):
+            print("material invalido")
+            continue
+        es_unisex= input("¿Es unisex? (s/n): ")
+        if not validar_es_unisex(es_unisex):
+            continue
+        precio= input("ingrese precio: ")
+        if not validar_precio(precio):
+            print("precio invalido")
+            continue
+        unidades = input("ingrese unidades: ")
+        if not validar_unidades(unidades):
+            print("unidad invalida")
+            continue
+        if agregar_prenda(codigo, nombre, categoria, talla, color, material, es_unisex.lower(), int(precio), int(unidades),prendas, bodega):
+            print("Prenda agregada")
+        else:
+            print("El código ya existe")
+    elif opcion == 5:
+        codigo = input("ingrese el codigo de la  prenda que desea eliminar ")
+        if eliminar_prenda(codigo, prendas, bodega):
+            print("Prenda eliminada")
+        else:
+            print("El código no existe")
+    elif opcion == 6:
+        print( "Programa finalizado.")
+        break
+        
