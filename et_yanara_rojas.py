@@ -58,7 +58,50 @@ def busqueda_precio(precio_min, precio_max, prendas, bodega):
             print(prendas)
     else:
         print("no hay prendas en ese rango de precio")   
-            
+
+def buscar_codigo(codigo):
+    return codigo.upper() in bodega
+def actualizar_precio(codigo, nuevo_precio, bodega):
+    codigo = codigo.upper()
+    if buscar_codigo(codigo):
+        bodega[codigo][0] = nuevo_precio
+        return True
+    return False
+def validar_código(codigo):
+    return codigo.strip() != "" and not buscar_codigo
+def validar_nombre(nombre):
+    return nombre.strip() != ""
+def validar_categoría(categoria):
+    return categoria.strip() != ""
+def validar_talla(talla):
+    return talla.strip() != ""
+def validar_color (color):
+    return color.strip() != ""
+def validar_material (material):
+    return material.strip != ""
+def validar_es_unisex(es_unisex ):
+    return es_unisex.lower() in ["s","n"]
+def validar_precio (precio):
+    try:
+        precio = int (precio)
+        if precio >0:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
+def validar_unidades (unidades):
+    try:
+        unidades = int(unidades)
+        if unidades >=0:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
+
+def agregar_prenda(codigo, nombre, categoria, talla, color, material, es_unisex, precio, unidades,prendas, bodega):
+     print
 
 
 
@@ -81,3 +124,21 @@ while True:
                 busqueda_precio(precio_min, precio_max, prendas, bodega)
         except ValueError:
             print("Debe ingresar valores enteros")
+    elif opcion == 3:
+        while True: 
+            try:
+                codigo = input("ingrese el codigo de la prenda: ")
+                if not buscar_codigo(codigo):
+                    print("el codigo no existe")
+                else:
+                    nuevo_precio = int(input("ingrese el nuevo precio: "))
+                    if nuevo_precio <0:
+                        print("el valor debe ser un numero entero ")
+                    else:
+                        if actualizar_precio(codigo, nuevo_precio, bodega):
+                            print("nuevo precio actualizado")
+                respuesta = input("¿Desea actualizar otro precio (s/n)?: ")
+                if respuesta.lower() == "n":
+                    break
+            except ValueError:
+                print("Debe ingresar valores enteros")
